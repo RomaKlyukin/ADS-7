@@ -17,7 +17,7 @@ class TPQueue {
 
  public:
   TPQueue():head(nullptr), tail(nullptr) {}
-  TPQueue(const T&);
+  explicit TPQueue(const T&);
   TPQueue(const TPQueue&);
   ~TPQueue();
   void addTail(const T&);
@@ -108,9 +108,9 @@ T TPQueue<T> :: pop() {
 }
 template <typename T>
 void TPQueue<T> ::push(const T& data) {
-  if (isEmpty())
+  if (isEmpty()) {
     addHead(data);
-  else {
+  } else {
     ITEM* te = head;
     insert(te->data, data);
   }
