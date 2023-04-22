@@ -55,42 +55,25 @@ void TPQueue<T> :: addHead(const T& data) {
     temp->next = head;
     temp->next->prev = temp;
     head = temp;
-  }
-  else {
+  } else {
     head = create(data);
     tail = head;
   }
 }
 template <typename T>
-  T TPQueue<T> :: rmHead() {
-    if (head) {
-      ITEM* temp = head->next;
-      if (temp)
-        temp->prev = nullptr;
-      T data = head->data;
-      delete head;
-      head = temp;
-      return data;
-  }
-  else {
-    throw std::string ("Empty!");
+T TPQueue<T> :: rmHead() {
+  if (head) {
+    ITEM* temp = head->next;
+    if (temp)
+      temp->prev = nullptr;
+    T data = head->data;
+    delete head;
+    head = temp;
+    return data;
+  } else {
+    throw std::string("Empty!");
   }
 }
-//template <typename T>
-//T TPQueue<T> :: rmTail() {
-//  if (head && tail) {
-//    ITEM* temp = tail->prev;
-//  if (temp)
-//    temp->next = nullptr;
-//    T data = tail->data;
-//    delete tail;
-//    tail = temp;
-//    return data;
-//  }
-//  else {
-//   throw std::string ("Empty!") ;
-//  }
-//}
 template <typename T>
 bool TPQueue <T> :: isEmpty() const {
   return !head;
@@ -100,22 +83,19 @@ void TPQueue<T> :: insert(const T& data, const T& value) {
   ITEM* temp = head;
   ITEM* item = create(value);
   //while ( temp && temp->data != data )
-  while (temp && (temp->data.prior) > (value.prior))
+  while (temp && (temp->data.prior) >= (value.prior))
     temp = temp->next;
   if (!temp && head) {
     tail->next = item;
     tail->next->prev = tail;
     tail = item;
-  }
-  else if (!temp && !head) {
+  } else if (!temp && !head) {
     head = tail = item;
-  }
-  else if (!temp->prev) {
+  } else if (!temp->prev) {
     temp->prev = item;
     item->next = temp;
     head = item;
-  }
-  else {
+  } else {
     temp->prev->next = item;
     item->prev = temp->prev;
     item->next = temp;
@@ -132,9 +112,6 @@ void TPQueue<T> ::push(const T& data) {
     addHead(data);
   else {
     ITEM* te = head;
-    //te->data.prior;
-    //while ((te->data.prior)>data.prior) 
-    //  te = te->next;
     insert(te->data, data);
   }
 }
